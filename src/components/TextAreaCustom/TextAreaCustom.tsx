@@ -1,7 +1,7 @@
 import { Box, Textarea } from '@chakra-ui/react'
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 import Selection from '../Selection/Selection';
-import { useDebounce } from 'usehooks-ts';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const TextAreaCustom = () => {
     const [userInput, setUserInput] = useState<string>('');
@@ -26,8 +26,10 @@ const TextAreaCustom = () => {
         console.log(`DEBAG: useInput: ${userInput} from: ${translateFrom} to ${translateTo}`);
         //? result from api
         setTranslatedText(userInput)
+
+
         // eslint-disable-next-line
-    }, [debouncedValue])
+    }, [debouncedValue, translateFrom, translateTo])
 
 
     return (

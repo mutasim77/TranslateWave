@@ -1,0 +1,21 @@
+.header {
+  background-color: #3a3939;
+  text-align: center;
+  letter-spacing: 1.5px;
+  padding: 7px 0;
+  font-size: 14px;
+  -webkit-box-shadow: 1px 1px 7px #fff;
+          box-shadow: 1px 1px 7px #fff;
+  z-index: 999;
+  position: sticky;
+  position: -webkit-sticky; /* Safari */
+  top: 0;
+  font-weight: 300;
+  color: #fff;
+}
+.header a {
+  color: inherit;
+}
+.header a svg {
+  display: inline;
+}/*# sourceMappingURL=Header.min.css.map */
