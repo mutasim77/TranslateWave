@@ -18,7 +18,6 @@ const TextAreaCustom = () => {
         setUserInput(e.target.value)
     }
 
-
     //! Fetching API
     useEffect(() => {
         if (userInput === '') {
