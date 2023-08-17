@@ -2,15 +2,17 @@ import { Box, Textarea } from '@chakra-ui/react'
 import { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react';
 import Selection from '../Selection/Selection';
 import { useDebounce } from '../../hooks/useDebounce';
+import { useHttp } from '../../hooks/useHttp';
 
 const TextAreaCustom = () => {
-    const [userInput, setUserInput] = useState<string>('');
+    const [userInput, setUserInput] = useState<string>('Hello');
     const [translatedText, setTranslatedText] = useState<string>('');
     const [translateFrom, setTranslateFrom] = useState<string>('en-GB');
     const [translateTo, setTranslateTo] = useState<string>('ru-RU');
 
     //! Here i'm using Debounce to prevent quickly qpi calls
-    const debouncedValue = useDebounce<string>(userInput, 500)
+    const debouncedValue = useDebounce<string>(userInput, 500);
+    const { isLoading, request } = useHttp();
 
     const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUserInput(e.target.value)
@@ -19,14 +21,13 @@ const TextAreaCustom = () => {
 
     //! Fetching API
     useEffect(() => {
-
-
-
-
-        console.log(`DEBAG: useInput: ${userInput} from: ${translateFrom} to ${translateTo}`);
-        //? result from api
-        setTranslatedText(userInput)
-
+        if (userInput === '') {
+            setTranslatedText('Enter something')
+            return
+        }
+        //! Call api
+        request({ userInput, translateFrom, translateTo })
+            .then(data => setTranslatedText(data.responseData.translatedText))
 
         // eslint-disable-next-line
     }, [debouncedValue, translateFrom, translateTo])
@@ -53,7 +54,7 @@ const TextAreaCustom = () => {
                     rows={10}
                     borderWidth={'2px'}
                     placeholder='Translated text'
-                    defaultValue={translatedText}
+                    defaultValue={isLoading ? 'loading...' : translatedText}
                 />
             </Box>
         </Box>
