@@ -11,7 +11,7 @@ const TextAreaCustom = () => {
     const [translateTo, setTranslateTo] = useState<string>('ru-RU');
 
     //! Here i'm using Debounce to prevent quickly qpi calls
-    const debouncedValue = useDebounce<string>(userInput, 500);
+    const debouncedValue = useDebounce<string>(userInput, 700);
     const { isLoading, request } = useHttp();
 
     const handleChange: ChangeEventHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,8 +23,9 @@ const TextAreaCustom = () => {
     useEffect(() => {
         if (userInput === '') {
             setTranslatedText('Enter something')
-            return
+            return;
         }
+
         //! Call api
         request({ userInput, translateFrom, translateTo })
             .then(data => setTranslatedText(data.responseData.translatedText))
@@ -34,7 +35,7 @@ const TextAreaCustom = () => {
 
 
     return (
-        <Box as='div' display={'flex'} justifyContent={'space-between'} gap={'2em'} mt={'2em'}>
+        <Box as='div' display={'flex'} flexDirection={{ base: 'column', md: 'row', lg: 'row' }} justifyContent={'space-between'} gap={'3em'} mt={'2em'}>
             <Box flex={'1'}>
                 <Selection defaultValue='en-GB' onHandleSelect={setTranslateFrom} />
                 <Textarea
