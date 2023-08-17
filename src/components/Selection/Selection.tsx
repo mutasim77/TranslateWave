@@ -1,20 +1,29 @@
-import { Box, Select } from '@chakra-ui/react'
+import { Select } from '@chakra-ui/react'
+import { countries } from '../../data/intex';
 
-const Selection = () => {
+interface SelectionProps {
+    defaultValue: string;
+    onHandleSelect: (value: string) => void
+}
+
+const Selection = ({ defaultValue, onHandleSelect }: SelectionProps) => {
     return (
-        <Box display={'flex'}>
-            <Select placeholder='Select option'>
-                <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
-            </Select>
-
-            <Select placeholder='Select option'>
-                <option value='option1'>Option 1</option>
-                <option value='option2'>Option 2</option>
-                <option value='option3'>Option 3</option>
-            </Select>
-        </Box>
+        <Select
+            mb={'1em'}
+            defaultValue={defaultValue}
+            onChange={(e) => onHandleSelect(e.target.value)}
+        >
+            {
+                Object.entries(countries).map(([key, value], inx) => (
+                    <option
+                        value={key}
+                        key={inx}
+                    >
+                        {value}
+                    </option>
+                ))
+            }
+        </Select>
     )
 }
 
